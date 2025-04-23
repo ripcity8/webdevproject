@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <a href="index.html">Proffesional Pages</a>
+    <a href="webapp.html">Web App</a>
+    <a href="scratch.html">Scratch Page</a>
+  <meta charset="UTF-8" />
+  <title>Guess the NBA Legend</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d1117;
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: #f0db4f;
+    }
+    #playerCard {
+      margin-top: 30px;
+      background-color: #161b22;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 10px #f0db4f;
+      display: none;
+    }
+    #playerCard img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      background-color: #f0db4f;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 10px;
+    }
+    button:hover {
+      background-color: #ffe64e;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .stat {
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏀 Guess the NBA Legend 🏀</h1>
+  <p>Can you guess which NBA legend this is?</p>
+  
+  <div id="imageBox">
+    <img id="playerImg" src="" alt="Player Image" style="display: none; width: 320px; height: 400px; object-fit: cover; border-radius: 8px; margin: 20px auto;" />
+  </div>
+
+  <select id="guessSelect">
+    <option value="" disabled selected>Select a player</option>
+    <option>LeBron James</option>
+    <option>Michael Jordan</option>
+    <option>Kareem Abdul-Jabbar</option>
+    <option>Shaquille O'Neal</option>
+    <option>Stephen Curry</option>
+  </select>
+  <br>
+  <button onclick="submitGuess()">Submit Guess</button>
+  <button onclick="startGame()">New Player</button>
+
+  <div id="resultMsg" style="margin-top: 20px; font-size: 18px;"></div>
+
+  <div id="playerCard">
+    <h2 id="playerName"></h2>
+    <p id="playerFact"></p>
+    <p class="stat" id="playerStats"></p>
+    <p class="stat" id="playerPosition"></p>
+  </div>
+
+  <script>
+    const players = [
+      {
+        name: "LeBron James",
+        fact: "All-time leading scorer in NBA history.",
+        stats: "38,000+ points, 10,000+ assists, 10,000+ rebounds",
+        position: "Forward",
+        img: "Lebron.jpg"
+      },
+      {
+        name: "Michael Jordan",
+        fact: "6× NBA champion and 5× MVP.",
+        stats: "30.1 PPG, 6.2 RPG, 5.3 APG",
+        position: "Guard",
+        img: "Jordan.jpg"
+      },
+      {
+        name: "Kareem Abdul-Jabbar",
+        fact: "Invented the skyhook and won 6 MVPs.",
+        stats: "38,387 points, 11× All-Defensive Team",
+        position: "Center",
+        img: "Kareem.jpg"
+      },
+      {
+        name: "Shaquille O'Neal",
+        fact: "Most dominant center of the 2000s.",
+        stats: "4× NBA champion, 15× All-Star",
+        position: "Center",
+        img: "Shaq.jpg"
+      },
+      {
+        name: "Stephen Curry",
+        fact: "Revolutionized the game with the 3-pointer.",
+        stats: "All-time leader in 3-pointers made",
+        position: "Guard",
+        img: "Curry.jpg"
+      }
+    ];
+
+    let currentPlayer = null;
+
+    function startGame() {
+      const card = document.getElementById('playerCard');
+      card.style.display = 'none';
+      document.getElementById('resultMsg').textContent = '';
+      document.getElementById('guessSelect').value = '';
+      currentPlayer = players[Math.floor(Math.random() * players.length)];
+      const img = document.getElementById('playerImg');
+      img.src = currentPlayer.img;
+      img.style.display = 'block';
+    }
+
+    function submitGuess() {
+      const guess = document.getElementById('guessSelect').value;
+      const result = document.getElementById('resultMsg');
+      const card = document.getElementById('playerCard');
+
+      if (!guess) {
+        result.textContent = "Please select a player.";
+        return;
+      }
+
+      if (guess === currentPlayer.name) {
+        result.textContent = "✅ Correct! You guessed the legend.";
+      } else {
+        result.textContent = `❌ Wrong! It was ${currentPlayer.name}.`;
+      }
+
+      document.getElementById('playerName').textContent = currentPlayer.name;
+      document.getElementById('playerFact').textContent = currentPlayer.fact;
+      document.getElementById('playerStats').textContent = "Stats: " + currentPlayer.stats;
+      document.getElementById('playerPosition').textContent = "Position: " + currentPlayer.position;
+      card.style.display = 'block';
+    } 
+
+    // Start the game on load
+    window.onload = startGame;
+  </script>
+
+</body>
+</html>
+
